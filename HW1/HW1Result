@@ -1,0 +1,38 @@
+<Summary Statistics> (('Mean', 0.0068839458857738404), ('Median', 0.0014825796886582337),
+('Min', -0.0013210039630118609), ('Max', 1.583517944173682),
+('StandardDev', 0.020261473186236192))
+
+<Pearson Correlation Coefficient> (-0.008278787084441042, -0.057868105677912396)
+
+<Regression Results>
+-------------------------Summary of Regression Analysis-------------------------
+
+Formula: Y ~ <logVOL> + <sqrPRC> + <intercept>
+
+Number of Observations:         157270
+Number of Degrees of Freedom:   3
+
+R-squared:         0.1197
+Adj R-squared:     0.1197
+
+Rmse:              0.0190
+
+F-stat (2, 157267): 10696.5525, p-value:     0.0000
+
+Degrees of Freedom: model 2, resid 157267
+
+-----------------------Summary of Estimated Coefficients------------------------
+      Variable       Coef    Std Err     t-stat    p-value    CI 2.5%   CI 97.5%
+--------------------------------------------------------------------------------
+        logVOL    -0.0019     0.0000    -140.36     0.0000    -0.0020    -0.0019
+        sqrPRC    -0.0002     0.0000     -26.70     0.0000    -0.0002    -0.0002
+     intercept     0.0287     0.0002     182.53     0.0000     0.0284     0.0290
+---------------------------------End of Summary---------------------------------
+
+<Conclusion>
+            We see that there is a negative correlation between
+            volume,price (adjusted) and the expected spread.
+            We propose that by increasing the trading volume or
+            the price of the trading material, we should see
+            greater liquidity in the market from a decrease in
+            spread.

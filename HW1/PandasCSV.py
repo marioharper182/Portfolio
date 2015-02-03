@@ -5,55 +5,51 @@ from pandas.stats.ols import OLS as ols
 import numpy as np
 import os
 import math
+import textwrap
 
 class Homework1():
     def __init__(self):
         pd.set_option('display.mpl_style', 'default')
-        # figsize(15,5)
 
         somecsv = os.path.abspath('quiz1.csv')
         somecsv = pd.read_csv(somecsv)
-        print(somecsv[:3])
 
         Ask = somecsv['ASK']
         Bid = somecsv['BID']
         Price = somecsv['PRC']
         Volume = somecsv['VOL']
 
-        # somecsv.replace('VOL', '', regex=True).astype('float')/100
         somecsv['VOL'] = somecsv['VOL'].astype('float')
         spread = (Ask-Bid)/((Ask+Bid)/2)
         Spread = somecsv['Spread'] = pd.Series(spread, index=somecsv.index)
         Volume1 = np.array(Volume)
-        # Volume = Volume.astype(float)
+
+        # Build the parameters for part 3
         Vollist = []
+        Pricelist = []
         for i in Volume1:
             try:
                 A = math.log(i)
                 Vollist.append(A)
             except:
                 Vollist.append(0)
-        # logVolume = [math.log(i) for i in Volume]
-        # logVolume = math.log(Volume)
-        somecsv['logVOL'] = pd.Series(Vollist, index=somecsv.index)
-        Pricelist = []
         for i in Price:
             try:
                 B = math.sqrt(i)
                 Pricelist.append(B)
             except:
                 Pricelist.append(0)
-
-        # sqrtPrice = math.sqrt(Price)
+        somecsv['logVOL'] = pd.Series(Vollist, index=somecsv.index)
         somecsv['sqrPRC'] = pd.Series(Pricelist, index=somecsv.index)
         X = somecsv[['logVOL', 'sqrPRC']]
 
         P1 = self.Problem1(spread)
         P2 = self.Problem2(Spread, Price, Volume)
-        p3 = self.Problem3(Spread, X)
-
-        print(P1)
-        print(P2)
+        P3 = self.Problem3(Spread, X)
+        print('<Summary Statistics>', P1)
+        print('<Pearson Correlation Coefficient>', P2)
+        print(P3)
+        self.Problem4()
 
     def Problem1(self, spread):
         sp = spread
@@ -84,7 +80,16 @@ class Homework1():
 
         # reg = ols(y=sp, x=(math.log(vol),math.sqrt(pr)))
         reg = ols(y=sp, x=x)
-        print(reg)
+        return(reg)
+
+    def Problem4(self):
+        print(textwrap.dedent("""
+            We see that there is a negative correlation between
+            volume,price (adjusted) and the expected spread.
+            We propose that by increasing the trading volume or
+            the price of the trading material, we should see
+            greater liquidity in the market from a decrease in
+            spread."""))
 
 def main():
     Homework1()
